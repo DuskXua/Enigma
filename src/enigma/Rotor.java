@@ -14,7 +14,7 @@ public class Rotor {
     private byte[] wiringMirror = new byte[26];
     private byte position;
     private final byte ROLLOVER;
-    
+    //ABCDEFGHIJKLMNOPQRSTUVWXYZ
     
     public int transmute(int letterNum, boolean isMirror){
         System.out.print(letterNum + ":");
@@ -23,11 +23,17 @@ public class Rotor {
             if(letter > 25){
                 letter -= 26;
             }   
-            int letterReturn = wiring[letter];
+            int letterReturn = wiring[letter] - (position - 1);
+            if(letterReturn < 1){
+                letterReturn += 26;
+            }
             System.out.print(letterReturn + " ");
             return letterReturn;
         }else{
-            int letter = (letterNum - 1);
+            int letter = (letterNum - 1) + (position - 1);
+            if(letter > 25){
+                letter -= 26;
+            }   
             int letterReturn = (wiringMirror[letter]) - (position - 1);
             if(letterReturn < 1){
                 letterReturn += 26;
