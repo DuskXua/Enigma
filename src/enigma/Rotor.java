@@ -51,6 +51,16 @@ public class Rotor {
         return position == ROLLOVER;
     }
     
+    public void turn(int amount){
+        position += amount;
+        while(position < 1){
+            position += 26;
+        }
+        while(position > 25){
+            position -= 26;
+        }
+    }
+    
     Rotor(int number){
         switch(number){
             case 1: 
