@@ -90,8 +90,8 @@ public class Enigma extends Application {
         HBox keyline3 = new HBox(10);
         
         keyline1.getChildren().addAll(btnQ,btnW,btnE,btnR,btnT,btnZ,btnU,btnI,btnO);
-        keyline1.getChildren().addAll(btnA,btnS,btnD,btnF,btnG,btnH,btnJ,btnK);
-        keyline1.getChildren().addAll(btnP,btnY,btnX,btnC,btnV,btnB,btnN,btnM,btnL);
+        keyline2.getChildren().addAll(btnA,btnS,btnD,btnF,btnG,btnH,btnJ,btnK);
+        keyline3.getChildren().addAll(btnP,btnY,btnX,btnC,btnV,btnB,btnN,btnM,btnL);
         
         VBox keyboard = new VBox();
         root.getChildren().add(keyline1);
@@ -106,7 +106,7 @@ public class Enigma extends Application {
         
         Scene scene = new Scene(root, 1200, 850);
         
-        primaryStage.setTitle("Hello World!");
+        primaryStage.setTitle("Enigma Machine");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
