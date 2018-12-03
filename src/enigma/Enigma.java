@@ -5,110 +5,24 @@
  */
 package enigma;
 
-import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.Orientation;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.shape.Circle;
-import javafx.stage.Stage;
-
 /**
  *
  * @author mfaux02
  */
-public class Enigma extends Application {
+public class Enigma{
     static Rotor rotor1 = new Rotor(1);
     static Rotor rotor2 = new Rotor(2);
     static Rotor rotor3 = new Rotor(3);
     static Reflector reflect = new Reflector('Z');
     
-    @Override
-    public void start(Stage primaryStage) {
-        Button btnA = makeButton("A");
-        Button btnB = makeButton("B");
-        Button btnC = makeButton("C");
-        Button btnD = makeButton("D");
-        Button btnE = makeButton("E");
-        Button btnF = makeButton("F");
-        Button btnG = makeButton("G");
-        Button btnH = makeButton("H");
-        Button btnI = makeButton("I");
-        Button btnJ = makeButton("J");
-        Button btnK = makeButton("K");
-        Button btnL = makeButton("L");
-        Button btnM = makeButton("M");
-        Button btnN = makeButton("N");
-        Button btnO = makeButton("O");
-        Button btnP = makeButton("P");
-        Button btnQ = makeButton("Q");
-        Button btnR = makeButton("R");
-        Button btnS = makeButton("S");
-        Button btnT = makeButton("T");
-        Button btnU = makeButton("U");
-        Button btnV = makeButton("V");
-        Button btnW = makeButton("W");
-        Button btnX = makeButton("X");
-        Button btnY = makeButton("Y");
-        Button btnZ = makeButton("Z");
-        TextField input = new TextField();
-        Label output = new Label();
-        Label position = new Label();
-        
-        Button translate = new Button("Enigma!");
-        
-        translate.setOnAction(new EventHandler<ActionEvent>() {
-            
-            @Override
-            public void handle(ActionEvent event) {
-                char[] inputArray = input.getText().toUpperCase().toCharArray();
-                String outputString = "";
-                for(int i = 0; i < inputArray.length; i++){
-                    if(inputArray[i] != ' '){
-                        outputString = outputString + translate(inputArray[i]);
-                    }
-                }
-                output.setText(outputString);
-                System.out.println(outputString);
-                input.setText("");
-                position.setText(convertFrom(rotor3.getPosition()) + " " + convertFrom(rotor2.getPosition()) + " " + convertFrom(rotor1.getPosition()));
-            }
-        });
-        
-        position.setText(convertFrom(rotor3.getPosition()) + " " + convertFrom(rotor2.getPosition()) + " " + convertFrom(rotor1.getPosition()));
-        
-        FlowPane root = new FlowPane(Orientation.VERTICAL);
-        
-        HBox keyline1 = new HBox(10);
-        HBox keyline2 = new HBox(10);
-        HBox keyline3 = new HBox(10);
-        
-        keyline1.getChildren().addAll(btnQ,btnW,btnE,btnR,btnT,btnZ,btnU,btnI,btnO);
-        keyline2.getChildren().addAll(btnA,btnS,btnD,btnF,btnG,btnH,btnJ,btnK);
-        keyline3.getChildren().addAll(btnP,btnY,btnX,btnC,btnV,btnB,btnN,btnM,btnL);
-        
-        VBox keyboard = new VBox();
-        root.getChildren().add(keyline1);
-        root.getChildren().add(keyline2);
-        root.getChildren().add(keyline3);
-        root.getChildren().add(input);
-        root.getChildren().add(translate);
-        root.getChildren().add(output);
-        root.getChildren().add(position);
-        
-        
-        
-        Scene scene = new Scene(root, 1200, 850);
-        
-        primaryStage.setTitle("Enigma Machine");
-        primaryStage.setScene(scene);
-        primaryStage.show();
+    public static String translateText(String text){
+        text = text.toUpperCase();
+        char[] letters = text.toCharArray();
+        String output = "";
+        for(int i = 0; i < letters.length; i++){
+            output = output + translate(letters[i]);
+        }
+        return output;
     }
     
     public static char translate(char letter){
@@ -134,7 +48,7 @@ public class Enigma extends Application {
         return output;
     }
     
-    private static int convertTo(char letter){
+    public static int convertTo(char letter){
         switch(letter){
             case 'A':
                 return 1;
@@ -193,7 +107,7 @@ public class Enigma extends Application {
         }
     }
 
-    private static char convertFrom(int letter){
+    public static char convertFrom(int letter){
         switch(letter){
             case 1:
                 return 'A';
@@ -251,33 +165,4 @@ public class Enigma extends Application {
                 return 0;
         }
     }
-    
-    private static Button makeButton(String txt){
-        Button btn = new Button(txt);
-        btn.setShape(new Circle(30));
-        btn.setMinSize(60, 60);
-        btn.setMaxSize(60, 60);
-        
-        btn.setStyle("-fx-background-color: #000000;  -fx-text-fill: #ffffff; -fx-border-color: #393939; -fx-border-width: 4px;");
-        
-        btn.setOnAction(new EventHandler<ActionEvent>(){
-            
-            
-            @Override
-            public void handle(ActionEvent event) {
-                
-                
-            }
-        });
-        
-        return btn;
-    }
-    
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        launch(args);
-    }
-    
 }

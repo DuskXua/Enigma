@@ -13,7 +13,8 @@ public class Rotor {
     private byte[] wiring = new byte[26];
     private byte[] wiringMirror = new byte[26];
     private byte position;
-    private final byte ROLLOVER;
+    private final byte ROLLOVERONE;
+    private final byte ROLLOVERTWO;
     //ABCDEFGHIJKLMNOPQRSTUVWXYZ
     
     public int transmute(int letterNum, boolean isMirror){
@@ -48,7 +49,7 @@ public class Rotor {
         if(position > 26){
             position = 1;
         }
-        return position == ROLLOVER;
+        return position == ROLLOVERONE | position == ROLLOVERTWO;
     }
     
     public void turn(int amount){
@@ -118,7 +119,8 @@ public class Rotor {
                 wiringMirror[24] = 15;  //Y - O
                 wiringMirror[25] = 10;  //Z - J
                 
-                ROLLOVER = 17;
+                ROLLOVERONE = 17;
+                ROLLOVERTWO = 27;
                 break;
             case 2:
                 wiring[0] = 1;          //A - A
@@ -175,7 +177,8 @@ public class Rotor {
                 wiringMirror[24] = 22;  //Y - V
                 wiringMirror[25] = 19;  //Z - S
                 
-                ROLLOVER = 5;
+                ROLLOVERONE = 5;
+                ROLLOVERTWO = 27;
                 break;
             case 3:
                 wiring[0] = 2;          //A - B
@@ -232,22 +235,302 @@ public class Rotor {
                 wiringMirror[24] = 15;  //Y - O
                 wiringMirror[25] = 13;  //Z - M
                 
-                ROLLOVER = 22;
+                ROLLOVERONE = 22;
+                ROLLOVERTWO = 27;
                 break;
             case 4:
-                ROLLOVER = 1;
+                wiring[0] = 5;
+                wiring[1] = 19;
+                wiring[2] = 15;
+                wiring[3] = 22;
+                wiring[4] = 16;
+                wiring[5] = 26;
+                wiring[6] = 10;
+                wiring[7] = 1;
+                wiring[8] = 25;
+                wiring[9] = 17;
+                wiring[10] = 21;
+                wiring[11] = 9;
+                wiring[12] = 18;
+                wiring[13] = 8;
+                wiring[14] = 24;
+                wiring[15] = 12;
+                wiring[16] = 14;
+                wiring[17] = 6;
+                wiring[18] = 20;
+                wiring[19] = 7;
+                wiring[20] = 11;
+                wiring[21] = 4;
+                wiring[22] = 3;
+                wiring[23] = 13;
+                wiring[24] = 23;
+                wiring[25] = 2;
+                
+                wiringMirror[0] = 8;
+                wiringMirror[1] = 26;
+                wiringMirror[2] = 23;
+                wiringMirror[3] = 22;
+                wiringMirror[4] = 1;
+                wiringMirror[5] = 18;
+                wiringMirror[6] = 20;
+                wiringMirror[7] = 14;
+                wiringMirror[8] = 12;
+                wiringMirror[9] = 7;
+                wiringMirror[10] = 21;
+                wiringMirror[11] = 16;
+                wiringMirror[12] = 24;
+                wiringMirror[13] = 17;
+                wiringMirror[14] = 3;
+                wiringMirror[15] = 5;
+                wiringMirror[16] = 10;
+                wiringMirror[17] = 13;
+                wiringMirror[18] = 2;
+                wiringMirror[19] = 19;
+                wiringMirror[20] = 11;
+                wiringMirror[21] = 4;
+                wiringMirror[22] = 25;
+                wiringMirror[23] = 15;
+                wiringMirror[24] = 9;
+                wiringMirror[25] = 6;
+                
+                ROLLOVERONE = 9;
+                ROLLOVERTWO = 27;
                 break;
             case 5:
-                ROLLOVER = 1;
+                wiring[0] = 22;
+                wiring[1] = 26;
+                wiring[2] = 2;
+                wiring[3] = 18;
+                wiring[4] = 7;
+                wiring[5] = 9;
+                wiring[6] = 20;
+                wiring[7] = 25;
+                wiring[8] = 21;
+                wiring[9] = 16;
+                wiring[10] = 19;
+                wiring[11] = 4;
+                wiring[12] = 14;
+                wiring[13] = 8;
+                wiring[14] = 12;
+                wiring[15] = 24;
+                wiring[16] = 1;
+                wiring[17] = 23;
+                wiring[18] = 13;
+                wiring[19] = 10;
+                wiring[20] = 17;
+                wiring[21] = 15;
+                wiring[22] = 6;
+                wiring[23] = 5;
+                wiring[24] = 3;
+                wiring[25] = 11;
+                
+                wiringMirror[0] = 17;
+                wiringMirror[1] = 3;
+                wiringMirror[2] = 25;
+                wiringMirror[3] = 12;
+                wiringMirror[4] = 24;
+                wiringMirror[5] = 23;
+                wiringMirror[6] = 5;
+                wiringMirror[7] = 14;
+                wiringMirror[8] = 6;
+                wiringMirror[9] = 20;
+                wiringMirror[10] = 26;
+                wiringMirror[11] = 15;
+                wiringMirror[12] = 19;
+                wiringMirror[13] = 13;
+                wiringMirror[14] = 22;
+                wiringMirror[15] = 10;
+                wiringMirror[16] = 21;
+                wiringMirror[17] = 4;
+                wiringMirror[18] = 11;
+                wiringMirror[19] = 7;
+                wiringMirror[20] = 9;
+                wiringMirror[21] = 1;
+                wiringMirror[22] = 18;
+                wiringMirror[23] = 16;
+                wiringMirror[24] = 8;
+                wiringMirror[25] = 2;
+                
+                ROLLOVERONE = 25;
+                ROLLOVERTWO = 27;
                 break;
             case 6:
-                ROLLOVER = 1;
+                wiring[0] = 10;
+                wiring[1] = 16;
+                wiring[2] = 7;
+                wiring[3] = 22;
+                wiring[4] = 15;
+                wiring[5] = 21;
+                wiring[6] = 13;
+                wiring[7] = 6;
+                wiring[8] = 25;
+                wiring[9] = 17;
+                wiring[10] = 2;
+                wiring[11] = 5;
+                wiring[12] = 14;
+                wiring[13] = 8;
+                wiring[14] = 26;
+                wiring[15] = 18;
+                wiring[16] = 4;
+                wiring[17] = 11;
+                wiring[18] = 1;
+                wiring[19] = 19;
+                wiring[20] = 24;
+                wiring[21] = 12;
+                wiring[22] = 9;
+                wiring[23] = 3;
+                wiring[24] = 20;
+                wiring[25] = 23;
+                
+                wiringMirror[0] = 19;
+                wiringMirror[1] = 11;
+                wiringMirror[2] = 24;
+                wiringMirror[3] = 17;
+                wiringMirror[4] = 12;
+                wiringMirror[5] = 8;
+                wiringMirror[6] = 3;
+                wiringMirror[7] = 14;
+                wiringMirror[8] = 23;
+                wiringMirror[9] = 1;
+                wiringMirror[10] = 18;
+                wiringMirror[11] = 22;
+                wiringMirror[12] = 7;
+                wiringMirror[13] = 13;
+                wiringMirror[14] = 5;
+                wiringMirror[15] = 2;
+                wiringMirror[16] = 10;
+                wiringMirror[17] = 16;
+                wiringMirror[18] = 20;
+                wiringMirror[19] = 25;
+                wiringMirror[20] = 6;
+                wiringMirror[21] = 4;
+                wiringMirror[22] = 26;
+                wiringMirror[23] = 21;
+                wiringMirror[24] = 9;
+                wiringMirror[25] = 15;
+
+                ROLLOVERONE = 12;
+                ROLLOVERTWO = 25;
                 break;
             case 7:
-                ROLLOVER = 1;
+                wiring[0] = 14;
+                wiring[1] = 26;
+                wiring[2] = 10;
+                wiring[3] = 8;
+                wiring[4] = 7;
+                wiring[5] = 18;
+                wiring[6] = 3;
+                wiring[7] = 24;
+                wiring[8] = 13;
+                wiring[9] = 25;
+                wiring[10] = 19;
+                wiring[11] = 23;
+                wiring[12] = 2;
+                wiring[13] = 15;
+                wiring[14] = 21;
+                wiring[15] = 6;
+                wiring[16] = 1;
+                wiring[17] = 9;
+                wiring[18] = 22;
+                wiring[19] = 12;
+                wiring[20] = 16;
+                wiring[21] = 5;
+                wiring[22] = 11;
+                wiring[23] = 17;
+                wiring[24] = 4;
+                wiring[25] = 20;
+                
+                wiringMirror[0] = 17;
+                wiringMirror[1] = 13;
+                wiringMirror[2] = 7;
+                wiringMirror[3] = 25;
+                wiringMirror[4] = 22;
+                wiringMirror[5] = 16;
+                wiringMirror[6] = 5;
+                wiringMirror[7] = 4;
+                wiringMirror[8] = 18;
+                wiringMirror[9] = 3;
+                wiringMirror[10] = 23;
+                wiringMirror[11] = 20;
+                wiringMirror[12] = 9;
+                wiringMirror[13] = 1;
+                wiringMirror[14] = 14;
+                wiringMirror[15] = 21;
+                wiringMirror[16] = 24;
+                wiringMirror[17] = 6;
+                wiringMirror[18] = 11;
+                wiringMirror[19] = 26;
+                wiringMirror[20] = 15;
+                wiringMirror[21] = 19;
+                wiringMirror[22] = 12;
+                wiringMirror[23] = 8;
+                wiringMirror[24] = 10;
+                wiringMirror[25] = 2;
+
+                ROLLOVERONE = 12;
+                ROLLOVERTWO = 25;
+                break;
+            case 8:
+                wiring[0] = 6;
+                wiring[1] = 11;
+                wiring[2] = 17;
+                wiring[3] = 8;
+                wiring[4] = 20;
+                wiring[5] = 12;
+                wiring[6] = 24;
+                wiring[7] = 15;
+                wiring[8] = 3;
+                wiring[9] = 2;
+                wiring[10] = 10;
+                wiring[11] = 19;
+                wiring[12] = 16;
+                wiring[13] = 4;
+                wiring[14] = 26;
+                wiring[15] = 18;
+                wiring[16] = 1;
+                wiring[17] = 13;
+                wiring[18] = 5;
+                wiring[19] = 23;
+                wiring[20] = 14;
+                wiring[21] = 9;
+                wiring[22] = 21;
+                wiring[23] = 25;
+                wiring[24] = 7;
+                wiring[25] = 22;
+                
+                wiringMirror[0] = 17;
+                wiringMirror[1] = 10;
+                wiringMirror[2] = 9;
+                wiringMirror[3] = 14;
+                wiringMirror[4] = 19;
+                wiringMirror[5] = 1;
+                wiringMirror[6] = 25;
+                wiringMirror[7] = 4;
+                wiringMirror[8] = 22;
+                wiringMirror[9] = 11;
+                wiringMirror[10] = 2;
+                wiringMirror[11] = 6;
+                wiringMirror[12] = 18;
+                wiringMirror[13] = 21;
+                wiringMirror[14] = 8;
+                wiringMirror[15] = 13;
+                wiringMirror[16] = 3;
+                wiringMirror[17] = 16;
+                wiringMirror[18] = 12;
+                wiringMirror[19] = 5;
+                wiringMirror[20] = 23;
+                wiringMirror[21] = 26;
+                wiringMirror[22] = 20;
+                wiringMirror[23] = 7;
+                wiringMirror[24] = 24;
+                wiringMirror[25] = 15;
+
+                ROLLOVERONE = 12;
+                ROLLOVERTWO = 25;
                 break;
             default:
-                ROLLOVER = 1;
+                ROLLOVERONE = 1;
+                ROLLOVERTWO = 27;
                 break;
         }
         position = 1;
