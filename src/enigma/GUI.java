@@ -23,6 +23,7 @@ import javafx.stage.Stage;
  * @author mfaux02
  */
 public class GUI extends Application {
+    static Enigma enigma;
     
     @Override
     public void start(Stage primaryStage) {
@@ -66,17 +67,17 @@ public class GUI extends Application {
                 String outputString = "";
                 for(int i = 0; i < inputArray.length; i++){
                     if(inputArray[i] != ' '){
-                        outputString = outputString + Enigma.translate(inputArray[i]);
+                        outputString = outputString + enigma.translate(inputArray[i]);
                     }
                 }
                 output.setText(outputString);
                 System.out.println(outputString);
                 input.setText("");
-                position.setText(Enigma.convertFrom(Enigma.rotor3.getPosition()) + " " + Enigma.convertFrom(Enigma.rotor2.getPosition()) + " " + Enigma.convertFrom(Enigma.rotor1.getPosition()));
+                position.setText(Enigma.convertFrom(enigma.rotor3.getPosition()) + " " + Enigma.convertFrom(enigma.rotor2.getPosition()) + " " + Enigma.convertFrom(enigma.rotor1.getPosition()));
             }
         });
         
-        position.setText(Enigma.convertFrom(Enigma.rotor3.getPosition()) + " " + Enigma.convertFrom(Enigma.rotor2.getPosition()) + " " + Enigma.convertFrom(Enigma.rotor1.getPosition()));
+        position.setText(Enigma.convertFrom(enigma.rotor3.getPosition()) + " " + Enigma.convertFrom(enigma.rotor2.getPosition()) + " " + Enigma.convertFrom(enigma.rotor1.getPosition()));
         
         FlowPane root = new FlowPane(Orientation.VERTICAL);
         
@@ -135,6 +136,7 @@ public class GUI extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        enigma = new Enigma(1,2,3,'B');
         launch(args);
     }
     

@@ -10,17 +10,24 @@ package enigma;
  * @author mfaux02
  */
 public class Enigma{
-    static Rotor rotor1 = new Rotor(1);
-    static Rotor rotor2 = new Rotor(2);
-    static Rotor rotor3 = new Rotor(3);
-    static Reflector reflect = new Reflector('Z');
+    Rotor rotor1;
+    Rotor rotor2;
+    Rotor rotor3;
+    Reflector reflect;
+    
+    Enigma(int firstRotorID, int secondRotorID, int thirdRotorID, char reflectorID){
+        rotor1 = new Rotor(firstRotorID);
+        rotor2 = new Rotor(secondRotorID);
+        rotor3 = new Rotor(thirdRotorID);
+        reflect = new Reflector(reflectorID);
+    }
     
     /**
      * Sends a string of text into the enigma machine and returns the encoded Text.
      * @param text
      * @return 
      */
-    public static String translateText(String text){
+    public String translateText(String text){
         text = text.toUpperCase();
         char[] letters = text.toCharArray();
         String output = "";
@@ -30,13 +37,29 @@ public class Enigma{
         return output;
     }
     
+    public void changeRotorOne(int newRotorID){
+        rotor1 = new Rotor(newRotorID);
+    }
+    
+    public void changeRotorTwo(int newRotorID){
+        rotor2 = new Rotor(newRotorID);
+    }
+    
+    public void changeRotorThree(int newRotorID){
+        rotor3 = new Rotor(newRotorID);
+    }
+    
+    public void changeReflector(char newReflectorID){
+        reflect = new Reflector(newReflectorID);
+    }
+    
     /**
      * Sends one letter into the enigma machine and returns the encoded letter.
      * Any character other than A-Z will be converted to a ~
      * @param letter To be encoded
      * @return The encoded letter
      */
-    public static char translate(char letter){
+    public char translate(char letter){
         int input1 = convertTo(letter);
         if(input1 == 0){
             return '~';
