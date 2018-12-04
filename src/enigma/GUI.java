@@ -105,6 +105,11 @@ public class GUI extends Application {
         primaryStage.show();
     }
     
+    /**
+     * 
+     * @param txt 
+     * @return Button with the desired txt on it
+     */
     private static Button makeButton(String txt){
         Button btn = new Button(txt);
         btn.setShape(new Circle(30));

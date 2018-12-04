@@ -17,6 +17,12 @@ public class Rotor {
     private final byte ROLLOVERTWO;
     //ABCDEFGHIJKLMNOPQRSTUVWXYZ
     
+    /**
+     * Takes a positional value 1-26 and a boolean and runs it through the rotor wiring. Returns the positional value for the coded letter.
+     * @param letterNum The numeric value of a particular letter/position
+     * @param isMirror Whether or not the signal is coming from the reversed side
+     * @return The value of the position after it has gone through
+     */
     public int transmute(int letterNum, boolean isMirror){
         System.out.print(letterNum + ":");
         if(!isMirror){
@@ -44,6 +50,10 @@ public class Rotor {
         }
     }
     
+    /**
+     * Rotates the rotor in sequence. Usually done after a single letter is sent through the enigma system.
+     * @return whether or not it would trigger the next rotor in sequence.
+     */
     public boolean rotate(){
         position++;
         if(position > 26){
@@ -52,6 +62,10 @@ public class Rotor {
         return position == ROLLOVERONE | position == ROLLOVERTWO;
     }
     
+    /**
+     * Move the rotor an amount in any direction.
+     * @param amount the amount to move.
+     */
     public void turn(int amount){
         position += amount;
         while(position < 1){
@@ -62,482 +76,154 @@ public class Rotor {
         }
     }
     
+    private void createRotor(char[] letters){
+        for(int i = 0; i < 26; i++){
+            wiring[i] = convertTo(letters[i]);
+        }
+        
+        for(int i = 0; i < 26; i++){
+            int temp = convertTo(letters[i]) - 1;
+            wiringMirror[temp] = (byte)(i + 1);
+        }
+    }
+    
+    private static byte convertTo(char letter){
+        switch(letter){
+            case 'A':
+                return 1;
+            case 'B':
+                return 2;
+            case 'C':
+                return 3;
+            case 'D':
+                return 4;
+            case 'E':
+                return 5;
+            case 'F':
+                return 6;
+            case 'G':
+                return 7;
+            case 'H':
+                return 8;
+            case 'I':
+                return 9;
+            case 'J':
+                return 10;
+            case 'K':
+                return 11;
+            case 'L':
+                return 12;
+            case 'M':
+                return 13;
+            case 'N':
+                return 14;
+            case 'O':
+                return 15;
+            case 'P':
+                return 16;
+            case 'Q':
+                return 17;
+            case 'R':
+                return 18;
+            case 'S':
+                return 19;
+            case 'T':
+                return 20;
+            case 'U':
+                return 21;
+            case 'V':
+                return 22;
+            case 'W':
+                return 23;
+            case 'X':
+                return 24;
+            case 'Y':
+                return 25;
+            case 'Z':
+                return 26;
+            default:
+                return 0;
+        }
+    }
+    
+    /**
+     * Takes a number 1-8 and creates the corresponding rotor.
+     * @param number The Rotor #
+     */
     Rotor(int number){
+        String letter;
         switch(number){
-            case 1: 
-                wiring[0] = 5;          //A - E
-                wiring[1] = 11;         //B - K
-                wiring[2] = 13;         //C - M
-                wiring[3] = 6;          //D - F
-                wiring[4] = 12;         //E - L
-                wiring[5] = 7;          //F - G
-                wiring[6] = 4;          //G - D
-                wiring[7] = 17;         //H - Q
-                wiring[8] = 22;         //I - V
-                wiring[9] = 26;         //J - Z
-                wiring[10] = 14;        //K - N
-                wiring[11] = 20;        //L - T
-                wiring[12] = 15;        //M - O
-                wiring[13] = 23;        //N - W
-                wiring[14] = 25;        //O - Y
-                wiring[15] = 8;         //P - H
-                wiring[16] = 24;        //Q - X
-                wiring[17] = 21;        //R - U
-                wiring[18] = 19;        //S - S
-                wiring[19] = 16;        //T - P
-                wiring[20] = 1;         //U - A
-                wiring[21] = 9;         //V - I
-                wiring[22] = 2;         //W - B
-                wiring[23] = 18;        //X - R
-                wiring[24] = 3;         //Y - C
-                wiring[25] = 10;        //Z - J
-                
-                wiringMirror[0] = 21;   //A - U
-                wiringMirror[1] = 23;   //B - W
-                wiringMirror[2] = 25;   //C - Y
-                wiringMirror[3] = 7;    //D - G
-                wiringMirror[4] = 1;    //E - A
-                wiringMirror[5] = 4;    //F - D
-                wiringMirror[6] = 6;    //G - F
-                wiringMirror[7] = 16;   //H - P
-                wiringMirror[8] = 22;   //I - V
-                wiringMirror[9] = 26;   //J - Z
-                wiringMirror[10] = 2;   //K - B
-                wiringMirror[11] = 5;   //L - E
-                wiringMirror[12] = 3;   //M - C
-                wiringMirror[13] = 11;  //N - K
-                wiringMirror[14] = 13;  //O - M
-                wiringMirror[15] = 20;  //P - T
-                wiringMirror[16] = 8;   //Q - H
-                wiringMirror[17] = 24;  //R - X
-                wiringMirror[18] = 19;  //S - S
-                wiringMirror[19] = 12;  //T - L
-                wiringMirror[20] = 18;  //U - R
-                wiringMirror[21] = 9;   //V - I
-                wiringMirror[22] = 14;  //W - N
-                wiringMirror[23] = 17;  //X - Q
-                wiringMirror[24] = 15;  //Y - O
-                wiringMirror[25] = 10;  //Z - J
-                
+            case 1:
+                letter = "EKMFLGDQVZNTOWYHXUSPAIBRCJ";
+                System.out.println("Rotor 1");
+                System.out.println("");
                 ROLLOVERONE = 17;
                 ROLLOVERTWO = 27;
                 break;
             case 2:
-                wiring[0] = 1;          //A - A
-                wiring[1] = 10;         //B - J
-                wiring[2] = 4;          //C - D
-                wiring[3] = 11;         //D - K
-                wiring[4] = 19;         //E - S
-                wiring[5] = 9;          //F - I
-                wiring[6] = 18;         //G - R
-                wiring[7] = 21;         //H - U
-                wiring[8] = 24;         //I - X
-                wiring[9] = 2;          //J - B
-                wiring[10] = 12;        //K - L
-                wiring[11] = 8;         //L - H
-                wiring[12] = 23;        //M - W
-                wiring[13] = 20;        //N - T
-                wiring[14] = 13;        //O - M
-                wiring[15] = 3;         //P - C
-                wiring[16] = 17;        //Q - Q
-                wiring[17] = 7;         //R - G
-                wiring[18] = 26;        //S - Z
-                wiring[19] = 14;        //T - N
-                wiring[20] = 16;        //U - P
-                wiring[21] = 25;        //V - Y
-                wiring[22] = 6;         //W - F
-                wiring[23] = 22;        //X - V
-                wiring[24] = 15;        //Y - O
-                wiring[25] = 5;         //Z - E
-                
-                wiringMirror[0] = 1;    //A - A
-                wiringMirror[1] = 10;   //B - J
-                wiringMirror[2] = 16;   //C - P
-                wiringMirror[3] = 3;    //D - C
-                wiringMirror[4] = 26;   //E - Z
-                wiringMirror[5] = 23;   //F - W
-                wiringMirror[6] = 18;   //G - R
-                wiringMirror[7] = 12;   //H - L
-                wiringMirror[8] = 6;    //I - F
-                wiringMirror[9] = 2;    //J - B
-                wiringMirror[10] = 4;   //K - D
-                wiringMirror[11] = 11;  //L - K
-                wiringMirror[12] = 15;  //M - O
-                wiringMirror[13] = 20;  //N - T
-                wiringMirror[14] = 25;  //O - Y
-                wiringMirror[15] = 21;  //P - U
-                wiringMirror[16] = 17;  //Q - Q
-                wiringMirror[17] = 7;   //R - G
-                wiringMirror[18] = 5;   //S - E
-                wiringMirror[19] = 14;  //T - N
-                wiringMirror[20] = 8;   //U - H
-                wiringMirror[21] = 24;  //V - X
-                wiringMirror[22] = 13;  //W - M
-                wiringMirror[23] = 9;   //X - I
-                wiringMirror[24] = 22;  //Y - V
-                wiringMirror[25] = 19;  //Z - S
-                
+                letter = "AJDKSIRUXBLHWTMCQGZNPYFVOE";
+                System.out.println("Rotor 2");
+                System.out.println("");
                 ROLLOVERONE = 5;
                 ROLLOVERTWO = 27;
                 break;
             case 3:
-                wiring[0] = 2;          //A - B
-                wiring[1] = 4;          //B - D
-                wiring[2] = 6;          //C - F
-                wiring[3] = 8;          //D - H
-                wiring[4] = 10;         //E - J
-                wiring[5] = 12;         //F - L
-                wiring[6] = 3;          //G - C
-                wiring[7] = 16;         //H - P
-                wiring[8] = 18;         //I - R
-                wiring[9] = 20;         //J - T
-                wiring[10] = 24;        //K - X
-                wiring[11] = 22;        //L - V
-                wiring[12] = 26;        //M - Z
-                wiring[13] = 14;        //N - N
-                wiring[14] = 25;        //O - Y
-                wiring[15] = 5;         //P - E
-                wiring[16] = 9;         //Q - I
-                wiring[17] = 23;        //R - W
-                wiring[18] = 7;         //S - G
-                wiring[19] = 1;         //T - A
-                wiring[20] = 11;        //U - K
-                wiring[21] = 13;        //V - M
-                wiring[22] = 21;        //W - U
-                wiring[23] = 19;        //X - S
-                wiring[24] = 17;        //Y - Q
-                wiring[25] = 15;        //Z - O
-                
-                wiringMirror[0] = 20;   //A - T
-                wiringMirror[1] = 1;    //B - A
-                wiringMirror[2] = 7;    //C - G
-                wiringMirror[3] = 2;    //D - B
-                wiringMirror[4] = 16;   //E - P
-                wiringMirror[5] = 3;    //F - C
-                wiringMirror[6] = 19;   //G - S
-                wiringMirror[7] = 4;    //H - D
-                wiringMirror[8] = 17;   //I - Q
-                wiringMirror[9] = 5;    //J - E
-                wiringMirror[10] = 21;  //K - U
-                wiringMirror[11] = 6;   //L - F
-                wiringMirror[12] = 22;  //M - V
-                wiringMirror[13] = 14;  //N - N
-                wiringMirror[14] = 26;  //O - Z
-                wiringMirror[15] = 8;   //P - H
-                wiringMirror[16] = 25;  //Q - Y
-                wiringMirror[17] = 9;   //R - I
-                wiringMirror[18] = 24;  //S - X
-                wiringMirror[19] = 10;  //T - J
-                wiringMirror[20] = 23;  //U - W
-                wiringMirror[21] = 12;  //V - L
-                wiringMirror[22] = 18;  //W - R
-                wiringMirror[23] = 11;  //X - K
-                wiringMirror[24] = 15;  //Y - O
-                wiringMirror[25] = 13;  //Z - M
-                
+                letter = "BDFHJLCPRTXVZNYEIWGAKMUSQO";
+                System.out.println("Rotor 3");
+                System.out.println("");
                 ROLLOVERONE = 22;
                 ROLLOVERTWO = 27;
                 break;
             case 4:
-                wiring[0] = 5;
-                wiring[1] = 19;
-                wiring[2] = 15;
-                wiring[3] = 22;
-                wiring[4] = 16;
-                wiring[5] = 26;
-                wiring[6] = 10;
-                wiring[7] = 1;
-                wiring[8] = 25;
-                wiring[9] = 17;
-                wiring[10] = 21;
-                wiring[11] = 9;
-                wiring[12] = 18;
-                wiring[13] = 8;
-                wiring[14] = 24;
-                wiring[15] = 12;
-                wiring[16] = 14;
-                wiring[17] = 6;
-                wiring[18] = 20;
-                wiring[19] = 7;
-                wiring[20] = 11;
-                wiring[21] = 4;
-                wiring[22] = 3;
-                wiring[23] = 13;
-                wiring[24] = 23;
-                wiring[25] = 2;
-                
-                wiringMirror[0] = 8;
-                wiringMirror[1] = 26;
-                wiringMirror[2] = 23;
-                wiringMirror[3] = 22;
-                wiringMirror[4] = 1;
-                wiringMirror[5] = 18;
-                wiringMirror[6] = 20;
-                wiringMirror[7] = 14;
-                wiringMirror[8] = 12;
-                wiringMirror[9] = 7;
-                wiringMirror[10] = 21;
-                wiringMirror[11] = 16;
-                wiringMirror[12] = 24;
-                wiringMirror[13] = 17;
-                wiringMirror[14] = 3;
-                wiringMirror[15] = 5;
-                wiringMirror[16] = 10;
-                wiringMirror[17] = 13;
-                wiringMirror[18] = 2;
-                wiringMirror[19] = 19;
-                wiringMirror[20] = 11;
-                wiringMirror[21] = 4;
-                wiringMirror[22] = 25;
-                wiringMirror[23] = 15;
-                wiringMirror[24] = 9;
-                wiringMirror[25] = 6;
-                
+                letter = "ESOVPZJAYQUIRHXLNFTGKDCMWB";
+                System.out.println("Rotor 4");
+                System.out.println("");
                 ROLLOVERONE = 9;
                 ROLLOVERTWO = 27;
                 break;
             case 5:
-                wiring[0] = 22;
-                wiring[1] = 26;
-                wiring[2] = 2;
-                wiring[3] = 18;
-                wiring[4] = 7;
-                wiring[5] = 9;
-                wiring[6] = 20;
-                wiring[7] = 25;
-                wiring[8] = 21;
-                wiring[9] = 16;
-                wiring[10] = 19;
-                wiring[11] = 4;
-                wiring[12] = 14;
-                wiring[13] = 8;
-                wiring[14] = 12;
-                wiring[15] = 24;
-                wiring[16] = 1;
-                wiring[17] = 23;
-                wiring[18] = 13;
-                wiring[19] = 10;
-                wiring[20] = 17;
-                wiring[21] = 15;
-                wiring[22] = 6;
-                wiring[23] = 5;
-                wiring[24] = 3;
-                wiring[25] = 11;
-                
-                wiringMirror[0] = 17;
-                wiringMirror[1] = 3;
-                wiringMirror[2] = 25;
-                wiringMirror[3] = 12;
-                wiringMirror[4] = 24;
-                wiringMirror[5] = 23;
-                wiringMirror[6] = 5;
-                wiringMirror[7] = 14;
-                wiringMirror[8] = 6;
-                wiringMirror[9] = 20;
-                wiringMirror[10] = 26;
-                wiringMirror[11] = 15;
-                wiringMirror[12] = 19;
-                wiringMirror[13] = 13;
-                wiringMirror[14] = 22;
-                wiringMirror[15] = 10;
-                wiringMirror[16] = 21;
-                wiringMirror[17] = 4;
-                wiringMirror[18] = 11;
-                wiringMirror[19] = 7;
-                wiringMirror[20] = 9;
-                wiringMirror[21] = 1;
-                wiringMirror[22] = 18;
-                wiringMirror[23] = 16;
-                wiringMirror[24] = 8;
-                wiringMirror[25] = 2;
-                
+                letter = "VZBRGITYUPSDNHLXAWMJQOFECK";
+                System.out.println("Rotor 5");
+                System.out.println("");
                 ROLLOVERONE = 25;
                 ROLLOVERTWO = 27;
                 break;
             case 6:
-                wiring[0] = 10;
-                wiring[1] = 16;
-                wiring[2] = 7;
-                wiring[3] = 22;
-                wiring[4] = 15;
-                wiring[5] = 21;
-                wiring[6] = 13;
-                wiring[7] = 6;
-                wiring[8] = 25;
-                wiring[9] = 17;
-                wiring[10] = 2;
-                wiring[11] = 5;
-                wiring[12] = 14;
-                wiring[13] = 8;
-                wiring[14] = 26;
-                wiring[15] = 18;
-                wiring[16] = 4;
-                wiring[17] = 11;
-                wiring[18] = 1;
-                wiring[19] = 19;
-                wiring[20] = 24;
-                wiring[21] = 12;
-                wiring[22] = 9;
-                wiring[23] = 3;
-                wiring[24] = 20;
-                wiring[25] = 23;
-                
-                wiringMirror[0] = 19;
-                wiringMirror[1] = 11;
-                wiringMirror[2] = 24;
-                wiringMirror[3] = 17;
-                wiringMirror[4] = 12;
-                wiringMirror[5] = 8;
-                wiringMirror[6] = 3;
-                wiringMirror[7] = 14;
-                wiringMirror[8] = 23;
-                wiringMirror[9] = 1;
-                wiringMirror[10] = 18;
-                wiringMirror[11] = 22;
-                wiringMirror[12] = 7;
-                wiringMirror[13] = 13;
-                wiringMirror[14] = 5;
-                wiringMirror[15] = 2;
-                wiringMirror[16] = 10;
-                wiringMirror[17] = 16;
-                wiringMirror[18] = 20;
-                wiringMirror[19] = 25;
-                wiringMirror[20] = 6;
-                wiringMirror[21] = 4;
-                wiringMirror[22] = 26;
-                wiringMirror[23] = 21;
-                wiringMirror[24] = 9;
-                wiringMirror[25] = 15;
-
+                letter = "JPGVOUMFYQBENHZRDKASXLICTW";
+                System.out.println("Rotor 6");
+                System.out.println("");
                 ROLLOVERONE = 12;
                 ROLLOVERTWO = 25;
                 break;
             case 7:
-                wiring[0] = 14;
-                wiring[1] = 26;
-                wiring[2] = 10;
-                wiring[3] = 8;
-                wiring[4] = 7;
-                wiring[5] = 18;
-                wiring[6] = 3;
-                wiring[7] = 24;
-                wiring[8] = 13;
-                wiring[9] = 25;
-                wiring[10] = 19;
-                wiring[11] = 23;
-                wiring[12] = 2;
-                wiring[13] = 15;
-                wiring[14] = 21;
-                wiring[15] = 6;
-                wiring[16] = 1;
-                wiring[17] = 9;
-                wiring[18] = 22;
-                wiring[19] = 12;
-                wiring[20] = 16;
-                wiring[21] = 5;
-                wiring[22] = 11;
-                wiring[23] = 17;
-                wiring[24] = 4;
-                wiring[25] = 20;
-                
-                wiringMirror[0] = 17;
-                wiringMirror[1] = 13;
-                wiringMirror[2] = 7;
-                wiringMirror[3] = 25;
-                wiringMirror[4] = 22;
-                wiringMirror[5] = 16;
-                wiringMirror[6] = 5;
-                wiringMirror[7] = 4;
-                wiringMirror[8] = 18;
-                wiringMirror[9] = 3;
-                wiringMirror[10] = 23;
-                wiringMirror[11] = 20;
-                wiringMirror[12] = 9;
-                wiringMirror[13] = 1;
-                wiringMirror[14] = 14;
-                wiringMirror[15] = 21;
-                wiringMirror[16] = 24;
-                wiringMirror[17] = 6;
-                wiringMirror[18] = 11;
-                wiringMirror[19] = 26;
-                wiringMirror[20] = 15;
-                wiringMirror[21] = 19;
-                wiringMirror[22] = 12;
-                wiringMirror[23] = 8;
-                wiringMirror[24] = 10;
-                wiringMirror[25] = 2;
-
+                letter = "NZJHGRCXMYSWBOUFAIVLPEKQDT";
+                System.out.println("Rotor 7");
+                System.out.println("");
                 ROLLOVERONE = 12;
                 ROLLOVERTWO = 25;
                 break;
             case 8:
-                wiring[0] = 6;
-                wiring[1] = 11;
-                wiring[2] = 17;
-                wiring[3] = 8;
-                wiring[4] = 20;
-                wiring[5] = 12;
-                wiring[6] = 24;
-                wiring[7] = 15;
-                wiring[8] = 3;
-                wiring[9] = 2;
-                wiring[10] = 10;
-                wiring[11] = 19;
-                wiring[12] = 16;
-                wiring[13] = 4;
-                wiring[14] = 26;
-                wiring[15] = 18;
-                wiring[16] = 1;
-                wiring[17] = 13;
-                wiring[18] = 5;
-                wiring[19] = 23;
-                wiring[20] = 14;
-                wiring[21] = 9;
-                wiring[22] = 21;
-                wiring[23] = 25;
-                wiring[24] = 7;
-                wiring[25] = 22;
-                
-                wiringMirror[0] = 17;
-                wiringMirror[1] = 10;
-                wiringMirror[2] = 9;
-                wiringMirror[3] = 14;
-                wiringMirror[4] = 19;
-                wiringMirror[5] = 1;
-                wiringMirror[6] = 25;
-                wiringMirror[7] = 4;
-                wiringMirror[8] = 22;
-                wiringMirror[9] = 11;
-                wiringMirror[10] = 2;
-                wiringMirror[11] = 6;
-                wiringMirror[12] = 18;
-                wiringMirror[13] = 21;
-                wiringMirror[14] = 8;
-                wiringMirror[15] = 13;
-                wiringMirror[16] = 3;
-                wiringMirror[17] = 16;
-                wiringMirror[18] = 12;
-                wiringMirror[19] = 5;
-                wiringMirror[20] = 23;
-                wiringMirror[21] = 26;
-                wiringMirror[22] = 20;
-                wiringMirror[23] = 7;
-                wiringMirror[24] = 24;
-                wiringMirror[25] = 15;
-
+                letter = "FKQHTLXOCBJSPDZRAMEWNIUYGV";
+                System.out.println("Rotor 8");
+                System.out.println("");
                 ROLLOVERONE = 12;
                 ROLLOVERTWO = 25;
                 break;
             default:
+                letter = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                System.out.println("Rotor default");
+                System.out.println("");
                 ROLLOVERONE = 1;
                 ROLLOVERTWO = 27;
                 break;
         }
+        char[] letters = letter.toCharArray();
+        createRotor(letters);
         position = 1;
     }
 
     /**
-     * @return the position
+     * @return the position 1-26 with 1 being the starting position.
      */
     public int getPosition() {
         return position;

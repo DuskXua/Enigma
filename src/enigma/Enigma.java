@@ -15,6 +15,11 @@ public class Enigma{
     static Rotor rotor3 = new Rotor(3);
     static Reflector reflect = new Reflector('Z');
     
+    /**
+     * Sends a string of text into the enigma machine and returns the encoded Text.
+     * @param text
+     * @return 
+     */
     public static String translateText(String text){
         text = text.toUpperCase();
         char[] letters = text.toCharArray();
@@ -25,6 +30,12 @@ public class Enigma{
         return output;
     }
     
+    /**
+     * Sends one letter into the enigma machine and returns the encoded letter.
+     * Any character other than A-Z will be converted to a ~
+     * @param letter To be encoded
+     * @return The encoded letter
+     */
     public static char translate(char letter){
         int input1 = convertTo(letter);
         if(input1 == 0){
@@ -48,6 +59,11 @@ public class Enigma{
         return output;
     }
     
+    /**
+     * Converts a letter to its numeric value 
+     * @param letter A-Z letter, must be capitalized.
+     * @return numeric value of a character
+     */
     public static int convertTo(char letter){
         switch(letter){
             case 'A':
@@ -107,6 +123,11 @@ public class Enigma{
         }
     }
 
+    /**
+     * Converts a numeric value to its corresponding letter.
+     * @param letter 1-26 int
+     * @return character at the corresponding value.
+     */
     public static char convertFrom(int letter){
         switch(letter){
             case 1:
