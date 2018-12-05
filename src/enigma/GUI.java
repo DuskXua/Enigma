@@ -27,6 +27,7 @@ public class GUI extends Application {
     
     @Override
     public void start(Stage primaryStage) {
+        enigma.addPlug('A','B');
         Button btnA = makeButton("A");
         Button btnB = makeButton("B");
         Button btnC = makeButton("C");

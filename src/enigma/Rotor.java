@@ -24,7 +24,6 @@ public class Rotor {
      * @return The value of the position after it has gone through
      */
     public int transmute(int letterNum, boolean isMirror){
-        System.out.print(letterNum + ":");
         if(!isMirror){
             int letter = (letterNum - 1) + (position - 1);
             if(letter > 25){

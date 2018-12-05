@@ -5,6 +5,8 @@
  */
 package enigma;
 
+import java.util.LinkedList;
+
 /**
  *
  * @author mfaux02
@@ -14,12 +16,14 @@ public class Enigma{
     Rotor rotor2;
     Rotor rotor3;
     Reflector reflect;
+    LinkedList<Plug> plugs;
     
     Enigma(int firstRotorID, int secondRotorID, int thirdRotorID, char reflectorID){
         rotor1 = new Rotor(firstRotorID);
         rotor2 = new Rotor(secondRotorID);
         rotor3 = new Rotor(thirdRotorID);
         reflect = new Reflector(reflectorID);
+        plugs = new LinkedList<>();
     }
     
     /**
@@ -60,7 +64,7 @@ public class Enigma{
      * @return The encoded letter
      */
     public char translate(char letter){
-        int input1 = convertTo(letter);
+        int input1 = convertTo(transmute(letter));
         if(input1 == 0){
             return '~';
         }
@@ -79,7 +83,57 @@ public class Enigma{
                 rotor1.rotate();
             }
         }
-        return output;
+        return transmute(output);
+    }
+    
+    /**
+     * Sends a letter through the plugboard, may not change depending on plugs.
+     * @param letter the letter to send through the plugboard.
+     * @return The letter returned by the plugboard.
+     */
+    public char transmute(char letter){
+        int index = plugs.indexOf(letter);
+        if(index != -1){
+            return plugs.get(index).transmute(letter);
+        }else{
+            return letter;
+        }
+    }
+    
+    /**
+     * Adds a plug between letterOne and letterTwo. Removes any plug in either slot.
+     * @param letterOne The first end of a plug
+     * @param letterTwo the second end of a plug
+     */
+    public void addPlug(char letterOne, char letterTwo){
+        if(plugs.contains(letterOne) | plugs.contains(letterTwo)){
+            int indexOne = plugs.indexOf(letterOne);
+            if(indexOne != -1){
+                plugs.remove(indexOne);
+            }
+            int indexTwo = plugs.indexOf(letterTwo);
+            if(indexTwo != -1){
+                plugs.remove(indexTwo);
+            }
+            plugs.add(new Plug(letterOne,letterTwo));
+        }else{
+            plugs.add(new Plug(letterOne,letterTwo));
+        }
+    }
+    
+    /**
+     * Takes a letter and removes the related plug, if any, returns true if removed, false if not found.
+     * @param letter the letter on either end of a plug.
+     * @return whether or not a plug was removed
+     */
+    public boolean removePlug(char letter){
+        if(plugs.contains(letter)){
+            int index = plugs.indexOf(letter);
+            plugs.remove(index);
+            return true;
+        }else{
+            return false;
+        }
     }
     
     /**
