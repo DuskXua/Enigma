@@ -13,6 +13,7 @@ public class Rotor {
     private byte[] wiring = new byte[26];
     private byte[] wiringMirror = new byte[26];
     private byte position;
+    private byte iD;
     private final byte ROLLOVERONE;
     private final byte ROLLOVERTWO;
     //ABCDEFGHIJKLMNOPQRSTUVWXYZ
@@ -92,6 +93,7 @@ public class Rotor {
      */
     Rotor(int number){
         String letter;
+        iD = (byte)number;
         switch(number){
             case 1:
                 letter = "EKMFLGDQVZNTOWYHXUSPAIBRCJ";
@@ -149,5 +151,12 @@ public class Rotor {
      */
     public int getPosition() {
         return position;
+    }
+
+    /**
+     * @return the iD
+     */
+    public byte getiD() {
+        return iD;
     }
 }

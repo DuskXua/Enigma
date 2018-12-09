@@ -11,6 +11,7 @@ package enigma;
  */
 public class Reflector {
     private byte[] wiring = new byte[26];
+    private char iD;
     
     public int transmute(int letterNum){
         System.out.print(letterNum + ":");
@@ -21,6 +22,7 @@ public class Reflector {
     }
     
     Reflector(char reflector){
+        iD = reflector;
         switch(reflector){
             case 'A': 
                 wiring[0] = 5;      //A - E
@@ -107,5 +109,12 @@ public class Reflector {
                 wiring[25] = 26;     //Z - D
                 break;
         }
+    }
+
+    /**
+     * @return the iD
+     */
+    public char getiD() {
+        return iD;
     }
 }
