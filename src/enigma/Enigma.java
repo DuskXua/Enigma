@@ -18,7 +18,8 @@ public class Enigma{
     Reflector reflect;
     LinkedList<Plug> plugs;
     
-    Enigma(int firstRotorID, int secondRotorID, int thirdRotorID, char reflectorID){
+    Enigma(int firstRotorID, int secondRotorID, int thirdRotorID, char 
+            reflectorID){
         rotor1 = new Rotor(firstRotorID);
         rotor2 = new Rotor(secondRotorID);
         rotor3 = new Rotor(thirdRotorID);
@@ -27,7 +28,8 @@ public class Enigma{
     }
     
     /**
-     * Sends a string of text into the enigma machine and returns the encoded Text.
+     * Sends a string of text into the enigma machine and returns the encoded 
+     * Text.
      * @param text
      * @return 
      */
@@ -75,15 +77,16 @@ public class Enigma{
         int input6 = rotor1.transmute(input5, true);
         int input7 = rotor2.transmute(input6, true);
         int input8 = rotor3.transmute(input7, true);
-        System.out.print(input8 + " ");
         char output = convertFrom(input8);
-        System.out.println(output);
+        return transmute(output);
+    }
+    
+    public void step(){
         if(rotor3.rotate()){
             if(rotor2.rotate()){
                 rotor1.rotate();
             }
         }
-        return transmute(output);
     }
     
     /**
@@ -101,7 +104,8 @@ public class Enigma{
     }
     
     /**
-     * Adds a plug between letterOne and letterTwo. Removes any plug in either slot.
+     * Adds a plug between letterOne and letterTwo. Removes any plug in either 
+     * slot.
      * @param letterOne The first end of a plug
      * @param letterTwo the second end of a plug
      */
@@ -122,7 +126,8 @@ public class Enigma{
     }
     
     /**
-     * Takes a letter and removes the related plug, if any, returns true if removed, false if not found.
+     * Takes a letter and removes the related plug, if any, returns true if 
+     * removed, false if not found.
      * @param letter the letter on either end of a plug.
      * @return whether or not a plug was removed
      */

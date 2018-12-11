@@ -14,10 +14,8 @@ public class Reflector {
     private char iD;
     
     public int transmute(int letterNum){
-        System.out.print(letterNum + ":");
         int letter = letterNum - 1;
         int letterReturn = wiring[letter];
-        System.out.print(letterReturn + " ");
         return letterReturn;
     }
     

@@ -19,7 +19,8 @@ public class Rotor {
     //ABCDEFGHIJKLMNOPQRSTUVWXYZ
     
     /**
-     * Takes a positional value 1-26 and a boolean and runs it through the rotor wiring. Returns the positional value for the coded letter.
+     * Takes a positional value 1-26 and a boolean and runs it through the 
+     * rotor wiring. Returns the positional value for the coded letter.
      * @param letterNum The numeric value of a particular letter/position
      * @param isMirror Whether or not the signal is coming from the reversed side
      * @return The value of the position after it has gone through
@@ -34,7 +35,6 @@ public class Rotor {
             if(letterReturn < 1){
                 letterReturn += 26;
             }
-            System.out.print(letterReturn + " ");
             return letterReturn;
         }else{
             int letter = (letterNum - 1) + (position - 1);
@@ -45,7 +45,6 @@ public class Rotor {
             if(letterReturn < 1){
                 letterReturn += 26;
             }
-            System.out.print(letterReturn + " ");
             return letterReturn;
         }
     }
