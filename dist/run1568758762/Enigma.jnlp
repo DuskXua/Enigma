@@ -8,13 +8,11 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="Enigma.jar" size="13651" download="eager" />
+    <jar href="Enigma.jar" size="18816" download="eager" />
   </resources>
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="Enigma" >
     <param name="requiredFXVersion" value="8.0+"/>
   </applet-desc>
-  <jfx:javafx-desc  width="800" height="600" main-class="enigma.GUI"  name="Enigma" >
-    <fx:argument>CommandLine</fx:argument>
-  </jfx:javafx-desc>
+  <jfx:javafx-desc  width="800" height="600" main-class="enigma.GUI"  name="Enigma" />
   <update check="always"/>
 </jnlp>

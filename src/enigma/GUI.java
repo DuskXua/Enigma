@@ -4,136 +4,25 @@
  * and open the template in the editor.
  */
 package enigma;
-
 import javafx.application.Application;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Orientation;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.FlowPane;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
-
 /**
  *
- * @author mfaux02
+ * @author eliza
  */
-public class GUI extends Application {
+public class GUI extends Application{
     static Enigma enigma;
+    static Scene enigmaMachine;
     
-    @Override
-    public void start(Stage primaryStage) {
-        enigma.addPlug('A','B');
-        Button btnA = makeButton("A");
-        Button btnB = makeButton("B");
-        Button btnC = makeButton("C");
-        Button btnD = makeButton("D");
-        Button btnE = makeButton("E");
-        Button btnF = makeButton("F");
-        Button btnG = makeButton("G");
-        Button btnH = makeButton("H");
-        Button btnI = makeButton("I");
-        Button btnJ = makeButton("J");
-        Button btnK = makeButton("K");
-        Button btnL = makeButton("L");
-        Button btnM = makeButton("M");
-        Button btnN = makeButton("N");
-        Button btnO = makeButton("O");
-        Button btnP = makeButton("P");
-        Button btnQ = makeButton("Q");
-        Button btnR = makeButton("R");
-        Button btnS = makeButton("S");
-        Button btnT = makeButton("T");
-        Button btnU = makeButton("U");
-        Button btnV = makeButton("V");
-        Button btnW = makeButton("W");
-        Button btnX = makeButton("X");
-        Button btnY = makeButton("Y");
-        Button btnZ = makeButton("Z");
-        TextField input = new TextField();
-        Label output = new Label();
-        Label position = new Label();
-        
-        Button translate = new Button("Enigma!");
-        
-        translate.setOnAction(new EventHandler<ActionEvent>() {
-            
-            @Override
-            public void handle(ActionEvent event) {
-                char[] inputArray = input.getText().toUpperCase().toCharArray();
-                String outputString = "";
-                for(int i = 0; i < inputArray.length; i++){
-                    if(inputArray[i] != ' '){
-                        outputString = outputString + enigma.translate(inputArray[i]);
-                    }
-                }
-                output.setText(outputString);
-                System.out.println(outputString);
-                input.setText("");
-                position.setText(Enigma.convertFrom(enigma.rotor3.getPosition()) + " " + Enigma.convertFrom(enigma.rotor2.getPosition()) + " " + Enigma.convertFrom(enigma.rotor1.getPosition()));
-            }
-        });
-        
-        position.setText(Enigma.convertFrom(enigma.rotor3.getPosition()) + " " + Enigma.convertFrom(enigma.rotor2.getPosition()) + " " + Enigma.convertFrom(enigma.rotor1.getPosition()));
-        
-        FlowPane root = new FlowPane(Orientation.VERTICAL);
-        
-        HBox keyline1 = new HBox(10);
-        HBox keyline2 = new HBox(10);
-        HBox keyline3 = new HBox(10);
-        
-        keyline1.getChildren().addAll(btnQ,btnW,btnE,btnR,btnT,btnZ,btnU,btnI,btnO);
-        keyline2.getChildren().addAll(btnA,btnS,btnD,btnF,btnG,btnH,btnJ,btnK);
-        keyline3.getChildren().addAll(btnP,btnY,btnX,btnC,btnV,btnB,btnN,btnM,btnL);
-        
-        root.getChildren().add(keyline1);
-        root.getChildren().add(keyline2);
-        root.getChildren().add(keyline3);
-        root.getChildren().add(input);
-        root.getChildren().add(translate);
-        root.getChildren().add(output);
-        root.getChildren().add(position);
-        
-        
-        
-        Scene scene = new Scene(root, 1200, 850);
-        
-        primaryStage.setTitle("Enigma Machine");
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
-    
-    /**
-     * 
-     * @param txt 
-     * @return Button with the desired txt on it
-     */
-    private static Button makeButton(String txt){
-        Button btn = new Button(txt);
-        btn.setShape(new Circle(30));
-        btn.setMinSize(60, 60);
-        btn.setMaxSize(60, 60);
-        
-        btn.setStyle("-fx-background-color: #000000;  -fx-text-fill: #ffffff; -fx-border-color: #393939; -fx-border-width: 4px;");
-        
-        btn.setOnAction(new EventHandler<ActionEvent>(){
-            
-            
-            @Override
-            public void handle(ActionEvent event) {
-                
-                
-            }
-        });
-        
-        return btn;
-    }
-    
-    /**
+       /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
@@ -141,4 +30,138 @@ public class GUI extends Application {
         launch(args);
     }
     
-}
+    public void start(Stage primaryStage){
+        primaryStage.setTitle("Faux Enigma Machine"); 
+        Button keyA = createKey("A");
+        Button keyB = createKey("B");
+        Button keyC = createKey("C");
+        Button keyD = createKey("D");
+        Button keyE = createKey("E");
+        Button keyF = createKey("F");
+        Button keyG = createKey("G");
+        Button keyH = createKey("H");
+        Button keyI = createKey("I");
+        Button keyJ = createKey("J");
+        Button keyK = createKey("K");
+        Button keyL = createKey("L");
+        Button keyM = createKey("M");
+        Button keyN = createKey("N");
+        Button keyO = createKey("O");
+        Button keyP = createKey("P");
+        Button keyQ = createKey("Q");
+        Button keyR = createKey("R");
+        Button keyS = createKey("S");
+        Button keyT = createKey("T");
+        Button keyU = createKey("U");
+        Button keyV = createKey("V");
+        Button keyW = createKey("W");
+        Button keyX = createKey("X");
+        Button keyY = createKey("Y");
+        Button keyZ = createKey("Z");
+        
+        HBox keyRow1 = makeHBox();
+        HBox keyRow2 = makeHBox();
+        HBox keyRow3 = makeHBox();
+        keyRow1.getChildren().addAll(keyQ,keyW,keyE,keyR,keyT,keyZ,keyU,keyI,keyO);
+        keyRow2.getChildren().addAll(keyA,keyS,keyD,keyF,keyG,keyH,keyJ,keyK);
+        keyRow3.getChildren().addAll(keyP,keyY,keyX,keyC,keyV,keyB,keyN,keyM,keyL);
+        VBox keyBoardBox = new VBox(30);
+        keyBoardBox.getChildren().addAll(keyRow1,keyRow2,keyRow3);
+        
+        Light lightA = createLight("A");
+        Light lightB = createLight("B");
+        Light lightC = createLight("C");
+        Light lightD = createLight("D");
+        Light lightE = createLight("E");
+        Light lightF = createLight("F");
+        Light lightG = createLight("G");
+        Light lightH = createLight("H");
+        Light lightI = createLight("I");
+        Light lightJ = createLight("J");
+        Light lightK = createLight("K");
+        Light lightL = createLight("L");
+        Light lightM = createLight("M");
+        Light lightN = createLight("N");
+        Light lightO = createLight("O");
+        Light lightP = createLight("P");
+        Light lightQ = createLight("Q");
+        Light lightR = createLight("R");
+        Light lightS = createLight("S");
+        Light lightT = createLight("T");
+        Light lightU = createLight("U");
+        Light lightV = createLight("V");
+        Light lightW = createLight("W");
+        Light lightX = createLight("X");
+        Light lightY = createLight("Y");
+        Light lightZ = createLight("Z");
+        
+        
+        HBox lightRow1 = makeHBox();
+        HBox lightRow2 = makeHBox(); 
+        HBox lightRow3 = makeHBox();
+        lightRow1.getChildren().addAll(lightQ.getStack(),lightW.getStack(),
+                lightE.getStack(),lightR.getStack(),lightT.getStack(),
+                lightZ.getStack(),lightU.getStack(),lightI.getStack(),
+                lightO.getStack());
+        lightRow2.getChildren().addAll(lightA.getStack(),lightS.getStack(),
+                lightD.getStack(),lightF.getStack(),lightG.getStack(),
+                lightH.getStack(),lightJ.getStack(),lightK.getStack());
+       lightRow3.getChildren().addAll(lightP.getStack(),lightY.getStack(),
+                lightX.getStack(),lightC.getStack(),lightV.getStack(),
+                lightB.getStack(),lightN.getStack(),lightM.getStack(),
+                lightL.getStack());
+        VBox lightBoardBox = new VBox(30);
+        lightBoardBox.getChildren().addAll(lightRow1,lightRow2,lightRow3);
+        
+        VBox enigmaBody = new VBox(80);
+        enigmaBody.getChildren().addAll(lightBoardBox,keyBoardBox);
+        enigmaMachine = new Scene(enigmaBody,900,900 );
+        primaryStage.setScene(enigmaMachine);
+        primaryStage.show();
+    }
+    
+    public Button createKey(String letter){
+        Button btn = new Button(letter);
+        btn.setShape(new Circle (30));
+        btn.setMinSize(60,60);
+        btn.setMaxSize(60,60);
+        btn.setStyle("-fx-background-color: #000000;  -fx-text-fill: #ffffff;"
+                + " -fx-border-color: #aaafb7; -fx-border-width: 6px; "
+                + "-fx-font-family: 'Able'; -fx-font-size: 25px; ");
+        return btn;
+    }
+    
+    public Light createLight(String txt){
+        Light light = new Light();
+        light.createLight(txt);
+        return light;
+    }
+    
+    public HBox makeHBox(){
+        HBox spacedRow = new HBox(30);
+        spacedRow.setAlignment(Pos.CENTER);
+        return spacedRow;
+        
+    }
+    
+    public void clickButtonHandler(Button key){
+        key.setOnMousePressed(new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent event) {
+                
+            }    
+        }
+        );          
+    }
+    
+    public void lightSwitchOn(){
+        
+    }
+    
+    public void lightSwitchOff(){
+        //enigmaMachine.setOnMouseRelease(){
+        
+    }
+    }
+
+
