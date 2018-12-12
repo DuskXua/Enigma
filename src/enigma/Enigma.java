@@ -102,9 +102,9 @@ public class Enigma{
     }
     
     public void step(){
-        if(rotor3.rotate()){
+        if(rotor1.rotate()){
             if(rotor2.rotate()){
-                rotor1.rotate();
+                rotor3.rotate();
             }
         }
     }

@@ -18,7 +18,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -53,7 +52,8 @@ public class GUI extends Application{
     static String letterArray[] = {"A","B","C","D","E","F","G","H","I","J","K","L",
             "M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
     static Lighting lighting;
-       /**
+     
+    /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
@@ -66,7 +66,7 @@ public class GUI extends Application{
         primaryStage.setTitle("Faux Enigma Machine"); 
         
         
-        
+        //create light for 3D effect
         Light.Distant light = new Light.Distant();
         light.setAzimuth(300);
         light.setElevation(50);
@@ -74,7 +74,7 @@ public class GUI extends Application{
         lighting = new Lighting();
         lighting.setLight(light);
         
-        
+        //loop through letters to create keybuttons and Light objects
         for(int loop =0 ;loop<26;loop++){
             keyArray[loop] = createKey(letterArray[loop]);
             lightArray[loop]=createLight(letterArray[loop]);
@@ -82,9 +82,12 @@ public class GUI extends Application{
             lightSwitchOff(keyArray[loop]);
         }
         
+        //create HBoxes for rows of keys
         HBox keyRow1 = makeHBox();
         HBox keyRow2 = makeHBox();
         HBox keyRow3 = makeHBox();
+        
+        //add keys to HBoxes to create rows
         keyRow1.getChildren().addAll(keyArray[16],keyArray[22],keyArray[4],
                 keyArray[17],keyArray[19],keyArray[25],keyArray[20],keyArray[8]
                 ,keyArray[14]);
@@ -93,12 +96,17 @@ public class GUI extends Application{
         keyRow3.getChildren().addAll(keyArray[15],keyArray[24],keyArray[23],
                 keyArray[2],keyArray[21],keyArray[1],keyArray[13],keyArray[12],
                 keyArray[11]);
+       
+        //add key rows to VBox to make keyboard
         VBox keyBoardBox = new VBox(30);
         keyBoardBox.getChildren().addAll(keyRow1,keyRow2,keyRow3);        
         
+        //create HBoxes for rows of lightBulbs
         HBox lightRow1 = makeHBox();
         HBox lightRow2 = makeHBox(); 
         HBox lightRow3 = makeHBox();
+        
+        //add lights to HBoxes to create rows
         lightRow1.getChildren().addAll(lightArray[16].getStack(),lightArray[22]
                 .getStack(),lightArray[4].getStack(),lightArray[17].getStack()
                 ,lightArray[19].getStack(),lightArray[25].getStack(),
@@ -113,31 +121,40 @@ public class GUI extends Application{
                lightArray[21].getStack(),lightArray[1].getStack(),lightArray[13]
                 .getStack(),lightArray[12].getStack(),lightArray[11].
                 getStack());
-        VBox lightBoardBox = new VBox(30);
+        
+       //add H
+       VBox lightBoardBox = new VBox(30);
         lightBoardBox.getChildren().addAll(lightRow1,lightRow2,lightRow3);
+        
+        //create ObservableList of Rotor names 
         ObservableList<String> rotorList =
                 FXCollections.observableArrayList("Rotor I","Rotor II",
                         "Rotor III","Rotor IV","Rotor V","Rotor VI",
                         "Rotor VII","Rotor VIII");
         
+        //convert letterArray to List and then to ObservableList
         List<String> list = Arrays.<String>asList(letterArray);
         ObservableList<String> obLetterList = FXCollections.observableArrayList();
         obLetterList.addAll(list);
         
         HBox rotorScrollBox = makeHBox();
         ComboBox rotor1ID = createRotorSelect(0,rotorList);
-        viewRotor1 = createLetterSelect(0,obLetterList);
         ComboBox rotor2ID = createRotorSelect(1,rotorList);
-        viewRotor2 = createLetterSelect(1,obLetterList);
         ComboBox rotor3ID = createRotorSelect(2,rotorList);
+        
+        viewRotor1 = createLetterSelect(0,obLetterList);
+        viewRotor2 = createLetterSelect(1,obLetterList);
         viewRotor3 = createLetterSelect(2,obLetterList);
+        
         Text label1 = new Text("1");
         Text label2 = new Text("2");
         Text label3 = new Text("3");
+        
         VBox rotor1Elements = new VBox();
         VBox rotor2Elements = new VBox();
         VBox rotor3Elements = new VBox();
         
+        //change rotor 1 with the ComboBox
         rotor1ID.setOnAction(new EventHandler(){
             @Override
             public void handle(Event event) {
@@ -170,6 +187,7 @@ public class GUI extends Application{
             }
         });
         
+        //change selected letter in ComboBox for rotor1
         viewRotor1.setOnAction(new EventHandler(){
             @Override
             public void handle(Event event) {
@@ -177,6 +195,7 @@ public class GUI extends Application{
             }
         });
         
+        //change rotor2 with the comboBox
         rotor2ID.setOnAction(new EventHandler(){
             @Override
             public void handle(Event event) {
@@ -209,13 +228,16 @@ public class GUI extends Application{
             }
         });
         
+        //change selected letter in ComboBox for rotor2
         viewRotor2.setOnAction(new EventHandler(){
             @Override
             public void handle(Event event) {
-                enigma.moveRotorTO(2, Enigma.convertTo(((String)((ComboBox)event.getSource()).getValue()).charAt(0)));
+                enigma.moveRotorTO(2, Enigma.convertTo(((String)((ComboBox)
+                        event.getSource()).getValue()).charAt(0)));
             }
         });
         
+        //change rotor3 with ComboBox
         rotor3ID.setOnAction(new EventHandler(){
             @Override
             public void handle(Event event) {
@@ -265,7 +287,7 @@ public class GUI extends Application{
         StackPane enigmaBody = new StackPane();
         ImageView iv = new ImageView(new Image(this.getClass().getResourceAsStream("blackBackgroundImage.png")));
         iv.setFitWidth(825);
-        iv.setFitHeight(800);
+        iv.setFitHeight(825);
         enigmaBody.getChildren().addAll(iv,keyLightAlign);
         keyLightAlign.getChildren().addAll(rotorScrollBox,lightBoardBox,keyBoardBox);
         enigmaMachine = new Scene(enigmaBody,900,900 );
