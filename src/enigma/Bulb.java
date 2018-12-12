@@ -14,16 +14,16 @@ import javafx.scene.text.Text;
  *
  * @author eliza
  */
-public class Light {
+public class Bulb {
     StackPane stack;
     Circle cir;
     Text text;
     String offLightFormat = "-fx-fill: #ffffff; -fx-font-size: 30px;"
             + "-fx-font-weight: bold; ";
-    String offCircFormat = "-fx-fill: #303030";
-    String onLightFormat = "-fx-fill: #fffc7a; -fx-font-size: 30px; "
+    String offCircFormat = "-fx-fill: #000000";
+    String onLightFormat = "-fx-fill: #fffa6d; -fx-font-size: 30px; "
             + "-fx-font-weight: bold;";
-    String onCircFormat = "-fx-fill: #282828";
+    String onCircFormat = "-fx-fill: #6a6d72";
     
     public void createLight(String letter){
         cir = new Circle(28);
@@ -31,6 +31,7 @@ public class Light {
         text = new Text(letter);
         text.setStyle(offLightFormat);
         stack = new StackPane();
+        stack.setEffect(GUI.lighting);
         stack.getChildren().addAll(cir,text);
     }
     
@@ -41,8 +42,8 @@ public class Light {
     public void lightOn(){
         text.setStyle(onLightFormat);
         cir.setStyle(onCircFormat);
-        text.setEffect(new Glow(10));
-        cir.setEffect(new Glow(1));
+        text.setEffect(new Glow(3.0));
+        //cir.setEffect(new Glow(1));
     }
     
     public void lightOff(){

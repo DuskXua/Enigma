@@ -4,17 +4,31 @@
  * and open the template in the editor.
  */
 package enigma;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import static javafx.collections.FXCollections.observableList;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.effect.Glow;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
+import javafx.scene.effect.Light;
+import javafx.scene.effect.Lighting;
+import javafx.scene.text.Text;
 /**
  *
  * @author eliza
@@ -28,8 +42,11 @@ public class GUI extends Application{
     public static String releaseKeyFormat = "-fx-background-color: #303030;  -fx-text-fill: "
             + "#ffffff; -fx-border-color: #aaafb7; -fx-border-width: 6px; "
             + "-fx-font-family: 'Able'; -fx-font-size: 25px;";
-    static Light lightArray[] = new Light[26];
+    static Bulb lightArray[] = new Bulb[26];
     static Button keyArray[] = new Button[26];
+    static String letterArray[] = {"A","B","C","D","E","F","G","H","I","J","K","L",
+            "M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
+    static Lighting lighting;
        /**
      * @param args the command line arguments
      */
@@ -42,8 +59,15 @@ public class GUI extends Application{
     public void start(Stage primaryStage){
         primaryStage.setTitle("Faux Enigma Machine"); 
         
-        String letterArray[] = {"A","B","C","D","E","F","G","H","I","J","K","L",
-            "M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
+        
+        
+        Light.Distant light = new Light.Distant();
+        light.setAzimuth(300);
+        light.setElevation(50);
+        
+        lighting = new Lighting();
+        lighting.setLight(light);
+        
         
         for(int loop =0 ;loop<26;loop++){
             keyArray[loop] = createKey(letterArray[loop]);
@@ -74,10 +98,10 @@ public class GUI extends Application{
                 ,lightArray[19].getStack(),lightArray[25].getStack(),
                 lightArray[20].getStack(),lightArray[8].getStack(),
                 lightArray[14].getStack());
-       lightRow2.getChildren().addAll(lightArray[0].getStack(),lightArray[1].getStack(),lightArray[18]
-               .getStack(),lightArray[3].getStack(),lightArray[5].getStack(),
-               lightArray[6].getStack(),lightArray[7].getStack(),lightArray[9]
-               .getStack(),lightArray[10].getStack());
+       lightRow2.getChildren().addAll(lightArray[0].getStack(),lightArray[1].
+                getStack(),lightArray[18].getStack(),lightArray[3].getStack(),
+                lightArray[5].getStack(),lightArray[6].getStack(),lightArray[7]
+                .getStack(),lightArray[9].getStack(),lightArray[10].getStack());
        lightRow3.getChildren().addAll(lightArray[15].getStack(),lightArray[24].
                getStack(),lightArray[23].getStack(),lightArray[2].getStack(),
                lightArray[21].getStack(),lightArray[1].getStack(),lightArray[13]
@@ -85,11 +109,43 @@ public class GUI extends Application{
                 getStack());
         VBox lightBoardBox = new VBox(30);
         lightBoardBox.getChildren().addAll(lightRow1,lightRow2,lightRow3);
+        ObservableList<String> rotorList =
+                FXCollections.observableArrayList("Rotor I","Rotor II",
+                        "Rotor III","Rotor IV","Rotor V","Rotor VI",
+                        "Rotor VII","Rotor VII");
+        
+        List<String> list = Arrays.<String>asList(letterArray);
+        ObservableList<String> obLetterList = FXCollections.observableArrayList();
+        obLetterList.addAll(list);
+        
+        HBox rotorScrollBox = makeHBox();
+        ComboBox rotor1Select = createRotorSelect(0,rotorList);
+        ComboBox viewRotor1 = createLetterSelect(0,obLetterList);
+        ComboBox rotor2Select = createRotorSelect(1,rotorList);
+        ComboBox viewRotor2 = createLetterSelect(1,obLetterList);
+        ComboBox rotor3Select = createRotorSelect(2,rotorList);
+        ComboBox viewRotor3 = createLetterSelect(2,obLetterList);
+        Text label1 = new Text("1");
+        Text label2 = new Text("2");
+        Text label3 = new Text("3");
+        VBox rotor1Elements = new VBox();
+        VBox rotor2Elements = new VBox();
+        VBox rotor3Elements = new VBox();
+        rotor1Elements.getChildren().addAll(label1,rotor1Select,viewRotor1);
+        rotor2Elements.getChildren().addAll(label2,rotor2Select,viewRotor2);
+        rotor3Elements.getChildren().addAll(label3,rotor3Select,viewRotor3);
+        rotorScrollBox.getChildren().addAll(rotor1Elements,rotor2Elements,rotor3Elements);
         
         
-        VBox enigmaBody = new VBox(80);
-        enigmaBody.getChildren().addAll(lightBoardBox,keyBoardBox);
+        VBox keyLightAlign = new VBox(80);
+        StackPane enigmaBody = new StackPane();
+        ImageView iv = new ImageView(new Image(this.getClass().getResourceAsStream("blackBackgroundImage.png")));
+        iv.setFitWidth(825);
+        iv.setFitHeight(800);
+        enigmaBody.getChildren().addAll(iv,keyLightAlign);
+        keyLightAlign.getChildren().addAll(rotorScrollBox,lightBoardBox,keyBoardBox);
         enigmaMachine = new Scene(enigmaBody,900,900 );
+        primaryStage.getIcons().add(new Image(this.getClass().getResourceAsStream("E icon.png")));
         primaryStage.setScene(enigmaMachine);
         primaryStage.show();
     }
@@ -100,13 +156,14 @@ public class GUI extends Application{
         btn.setMinSize(60,60);
         btn.setMaxSize(60,60);
         btn.setStyle(releaseKeyFormat);
+        btn.setEffect(lighting);
         return btn;
     }
     
-    public Light createLight(String txt){
-        Light light = new Light();
-        light.createLight(txt);
-        return light;
+    public Bulb createLight(String txt){
+        Bulb lightBulb = new Bulb();
+        lightBulb.createLight(txt);
+        return lightBulb;
     }
     
     public HBox makeHBox(){
@@ -137,6 +194,21 @@ public class GUI extends Application{
                 enigma.step();
             }
         });
+    }
+    
+    public ComboBox createLetterSelect(int firstSet, ObservableList<String> list){
+        ComboBox letterSelect = new ComboBox(list);
+        letterSelect.getSelectionModel().select(firstSet);
+        letterSelect.setStyle("-fx-fill: #000000; -fx-font-size: 25px;");
+        //letterSelect.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>);
+        return letterSelect;
+    }
+    
+    public ComboBox createRotorSelect(int selectRotor, ObservableList<String> list){
+        
+        ComboBox rotorSelect = new ComboBox(list);
+        rotorSelect.getSelectionModel().select(selectRotor);
+        return rotorSelect;
     }
     
 }
