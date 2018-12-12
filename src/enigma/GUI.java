@@ -12,6 +12,7 @@ import javafx.application.Application;
 import javafx.collections.FXCollections;
 import static javafx.collections.FXCollections.observableList;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -36,6 +37,11 @@ import javafx.scene.text.Text;
 public class GUI extends Application{
     static Enigma enigma;
     static Scene enigmaMachine;
+    
+    static ComboBox viewRotor1;
+    static ComboBox viewRotor2;
+    static ComboBox viewRotor3;
+    
     public static String clickKeyFormat = "-fx-background-color: #000000; -fx-text-fill: "
             + "#c9c9c9; -fx-border-color: #888c93; -fx-border-width: 6px; "
             + "-fx-font-family: 'Able'; -fx-font-size: 25px";
@@ -112,28 +118,146 @@ public class GUI extends Application{
         ObservableList<String> rotorList =
                 FXCollections.observableArrayList("Rotor I","Rotor II",
                         "Rotor III","Rotor IV","Rotor V","Rotor VI",
-                        "Rotor VII","Rotor VII");
+                        "Rotor VII","Rotor VIII");
         
         List<String> list = Arrays.<String>asList(letterArray);
         ObservableList<String> obLetterList = FXCollections.observableArrayList();
         obLetterList.addAll(list);
         
         HBox rotorScrollBox = makeHBox();
-        ComboBox rotor1Select = createRotorSelect(0,rotorList);
-        ComboBox viewRotor1 = createLetterSelect(0,obLetterList);
-        ComboBox rotor2Select = createRotorSelect(1,rotorList);
-        ComboBox viewRotor2 = createLetterSelect(1,obLetterList);
-        ComboBox rotor3Select = createRotorSelect(2,rotorList);
-        ComboBox viewRotor3 = createLetterSelect(2,obLetterList);
+        ComboBox rotor1ID = createRotorSelect(0,rotorList);
+        viewRotor1 = createLetterSelect(0,obLetterList);
+        ComboBox rotor2ID = createRotorSelect(1,rotorList);
+        viewRotor2 = createLetterSelect(1,obLetterList);
+        ComboBox rotor3ID = createRotorSelect(2,rotorList);
+        viewRotor3 = createLetterSelect(2,obLetterList);
         Text label1 = new Text("1");
         Text label2 = new Text("2");
         Text label3 = new Text("3");
         VBox rotor1Elements = new VBox();
         VBox rotor2Elements = new VBox();
         VBox rotor3Elements = new VBox();
-        rotor1Elements.getChildren().addAll(label1,rotor1Select,viewRotor1);
-        rotor2Elements.getChildren().addAll(label2,rotor2Select,viewRotor2);
-        rotor3Elements.getChildren().addAll(label3,rotor3Select,viewRotor3);
+        
+        rotor1ID.setOnAction(new EventHandler(){
+            @Override
+            public void handle(Event event) {
+                switch((String)((ComboBox)event.getSource()).getValue()){
+                    case "Rotor I":
+                        enigma.changeRotorOne(1);
+                        break;
+                    case "Rotor II":
+                        enigma.changeRotorOne(2);
+                        break;
+                    case "Rotor III":
+                        enigma.changeRotorOne(3);
+                        break;
+                    case "Rotor IV":
+                        enigma.changeRotorOne(4);
+                        break;
+                    case "Rotor V":
+                        enigma.changeRotorOne(5);
+                        break;
+                    case "Rotor VI":
+                        enigma.changeRotorOne(6);
+                        break;
+                    case "Rotor VII":
+                        enigma.changeRotorOne(7);
+                        break;
+                    case "Rotor VIII":
+                        enigma.changeRotorOne(8);
+                        break;
+                }
+            }
+        });
+        
+        viewRotor1.setOnAction(new EventHandler(){
+            @Override
+            public void handle(Event event) {
+                enigma.moveRotorTO(1, Enigma.convertTo(((String)((ComboBox)event.getSource()).getValue()).charAt(0)));
+            }
+        });
+        
+        rotor2ID.setOnAction(new EventHandler(){
+            @Override
+            public void handle(Event event) {
+                switch((String)((ComboBox)event.getSource()).getValue()){
+                    case "Rotor I":
+                        enigma.changeRotorTwo(1);
+                        break;
+                    case "Rotor II":
+                        enigma.changeRotorTwo(2);
+                        break;
+                    case "Rotor III":
+                        enigma.changeRotorTwo(3);
+                        break;
+                    case "Rotor IV":
+                        enigma.changeRotorTwo(4);
+                        break;
+                    case "Rotor V":
+                        enigma.changeRotorTwo(5);
+                        break;
+                    case "Rotor VI":
+                        enigma.changeRotorTwo(6);
+                        break;
+                    case "Rotor VII":
+                        enigma.changeRotorTwo(7);
+                        break;
+                    case "Rotor VIII":
+                        enigma.changeRotorTwo(8);
+                        break;
+                }
+            }
+        });
+        
+        viewRotor2.setOnAction(new EventHandler(){
+            @Override
+            public void handle(Event event) {
+                enigma.moveRotorTO(2, Enigma.convertTo(((String)((ComboBox)event.getSource()).getValue()).charAt(0)));
+            }
+        });
+        
+        rotor3ID.setOnAction(new EventHandler(){
+            @Override
+            public void handle(Event event) {
+                switch((String)((ComboBox)event.getSource()).getValue()){
+                    case "Rotor I":
+                        enigma.changeRotorThree(1);
+                        break;
+                    case "Rotor II":
+                        enigma.changeRotorThree(2);
+                        break;
+                    case "Rotor III":
+                        enigma.changeRotorThree(3);
+                        break;
+                    case "Rotor IV":
+                        enigma.changeRotorThree(4);
+                        break;
+                    case "Rotor V":
+                        enigma.changeRotorThree(5);
+                        break;
+                    case "Rotor VI":
+                        enigma.changeRotorThree(6);
+                        break;
+                    case "Rotor VII":
+                        enigma.changeRotorThree(7);
+                        break;
+                    case "Rotor VIII":
+                        enigma.changeRotorThree(8);
+                        break;
+                }
+            }
+        });
+        
+        viewRotor3.setOnAction(new EventHandler(){
+            @Override
+            public void handle(Event event) {
+                enigma.moveRotorTO(3, Enigma.convertTo(((String)((ComboBox)event.getSource()).getValue()).charAt(0)));
+            }
+        });
+        
+        rotor1Elements.getChildren().addAll(label1,rotor1ID,viewRotor1);
+        rotor2Elements.getChildren().addAll(label2,rotor2ID,viewRotor2);
+        rotor3Elements.getChildren().addAll(label3,rotor3ID,viewRotor3);
         rotorScrollBox.getChildren().addAll(rotor1Elements,rotor2Elements,rotor3Elements);
         
         
@@ -191,9 +315,16 @@ public class GUI extends Application{
                 clickedKey.setStyle(releaseKeyFormat);
                 lightArray[enigma.convertTo(enigma.translate(clickedKey.
                         getText().charAt(0)))-1].lightOff();
-                enigma.step();
+                stepEnigma();
             }
         });
+    }
+    
+    public void stepEnigma(){
+        enigma.step();
+        viewRotor1.setValue(Enigma.convertFrom(enigma.rotor1.getPosition()) + "");
+        viewRotor2.setValue(Enigma.convertFrom(enigma.rotor2.getPosition()) + "");
+        viewRotor3.setValue(Enigma.convertFrom(enigma.rotor3.getPosition()) + "");
     }
     
     public ComboBox createLetterSelect(int firstSet, ObservableList<String> list){

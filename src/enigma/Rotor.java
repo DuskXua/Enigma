@@ -70,7 +70,17 @@ public class Rotor {
         while(position < 1){
             position += 26;
         }
-        while(position > 25){
+        while(position > 26){
+            position -= 26;
+        }
+    }
+    
+    public void moveTo(int newPosition){
+        position = (byte)newPosition;
+        while(position < 1){
+            position += 26;
+        }
+        while(position > 26){
             position -= 26;
         }
     }

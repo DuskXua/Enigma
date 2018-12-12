@@ -43,19 +43,39 @@ public class Enigma{
         return output;
     }
     
+    public void moveRotorTO(int rotorID, int moveTo){
+        switch(rotorID){
+            case 1:
+                rotor1.moveTo(moveTo);
+                break;
+            case 2:
+                rotor2.moveTo(moveTo);
+                break;
+            case 3:
+                rotor3.moveTo(moveTo);
+                break;
+            default:
+                break;
+        }
+    }
+    
     public void changeRotorOne(int newRotorID){
+        System.out.println("Rotor 1 changed to " + newRotorID);
         rotor1 = new Rotor(newRotorID);
     }
     
     public void changeRotorTwo(int newRotorID){
+        System.out.println("Rotor 2 changed to " + newRotorID);
         rotor2 = new Rotor(newRotorID);
     }
     
     public void changeRotorThree(int newRotorID){
+        System.out.println("Rotor 3 changed to " + newRotorID);
         rotor3 = new Rotor(newRotorID);
     }
     
     public void changeReflector(char newReflectorID){
+        System.out.println("Reflector changed to " + newReflectorID);
         reflect = new Reflector(newReflectorID);
     }
     
